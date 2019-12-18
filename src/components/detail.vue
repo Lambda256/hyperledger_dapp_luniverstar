@@ -145,7 +145,7 @@ export default {
   },
   methods: {
     load() {
-      this.axios.get(`https://api.luniverse.io/tx/v1.0/histories?next=0`,{
+      this.axios.get(`http://localhost:8081/tx/v1.0/histories?next=0`,{
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
           'Content-Type': `application/json`
@@ -155,16 +155,11 @@ export default {
           var l = parseInt(this.database.like.replace(/,/g,""));
           var p = parseInt(this.database.people.replace(/,/g,""));
           var m = parseInt(this.database.money.replace(/,/g,""));
-          var temp=response.data.data.histories.items.filter(valid => valid.txStatus==="SUCCEED" && [Config.txActionName.funding, Config.txActionName.like].indexOf(valid.actionName) !== -1);
-          temp.map(tx => {
-            if(tx.actionName === Config.txActionName.like){
-              l = l + 1;
-            }
-            else if(tx.actionName === Config.txActionName.funding){
-              p = p + 1;
-              m = m + 10000;
-            }
-          })
+          var temp = response.data;
+          l = l + temp.likeCount;
+          p = p + temp.fundingCount;
+          m = m + 10000 * temp.fundingCount;
+
           l = l.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           this.database.like = l;
           p = p.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -172,12 +167,13 @@ export default {
           m = m.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           this.database.money = m;
         })
-        .catch(() => {
+        .catch((error) => {
+        alert(error);
         })
     },
     like(){
       let n = parseInt(this.database.like.replace(/,/g,""));
-      this.axios.post(`https://api.luniverse.io/tx/v1.0/transactions/${this.txActionName.like}`,{ 
+      this.axios.post(`http://localhost:8081/tx/v1.0/transactions/like`,{
           'from': this.walletAddress.pd,
           'inputs' : {
             'receiverAddress': this.walletAddress.user,
@@ -186,7 +182,7 @@ export default {
       },
       {
         headers: {
-          'api-key': this.apiKey,
+            'api-key': this.apiKey
         }
       }
       )
@@ -196,23 +192,24 @@ export default {
           n = n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           this.database.like=n;
         })
-        .catch(() => {
-          alert('좋아요에 실패했습니다!')
+        .catch((error) => {
+        alert(error);
+          //alert('좋아요에 실패했습니다!')
         });
     },
     fund(){
       let m = parseInt(this.database.money.replace(/,/g,""));
       let p = parseInt(this.database.people.replace(/,/g,""));
-      this.axios.post(`https://api.luniverse.io/tx/v1.0/transactions/${this.txActionName.funding}`,{
+      this.axios.post(`http://localhost:8081/tx/v1.0/transactions/funding`,{
             'from': this.walletAddress.pd,
             'inputs' : {
               'receiverAddress': this.walletAddress.user,
               'valueAmount': '1000000000000000000000'
             }
-        }, 
+        },
         {
           headers: {
-            'api-key': this.apiKey,
+            'api-key': this.apiKey
           },
         })
         .then(() => {
@@ -224,8 +221,9 @@ export default {
           p= p.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           this.database.people=p;
         })
-        .catch(() => {
-          alert('Fund에 실패했습니다!')
+        .catch((error) => {
+        alert(error);
+          //alert('Fund에 실패했습니다!')
         });
       
     }

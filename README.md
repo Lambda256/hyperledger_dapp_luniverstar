@@ -1,1 +1,1 @@
-# demo-idol-funding
+# demo-idol-funding# hyperledger_dapp_luniverstar
