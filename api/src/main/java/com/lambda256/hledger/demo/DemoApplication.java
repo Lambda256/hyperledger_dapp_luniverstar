@@ -52,10 +52,15 @@ public class DemoApplication {
 	private static String channelName = "mychannel";
 	private static String userName = "admin";
 	private static String secret = "adminpw";
-	private static String chaincodeName = "myccjava";
-	private static String chaincodeVersion = "1.1";
+
+	private static String aValue = "funding";
+	private static String bValue = "like";
+	private static String cValue = "rwt";
 
 	private static Channel channel = null;
+	private static String chaincodeName = "myccjava";
+	private static String chaincodeVersion = "1.0";
+
 	private static HFClient client = null;
 
 	private int fundingCount = 10;
@@ -63,24 +68,6 @@ public class DemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
-	}
-
-	@RequestMapping("/start")
-	public ResponseEntity<String> start(@RequestParam(value = "name", defaultValue = "World") String name) {
-		String response = new String();
-
-		if (channel == null) {
-			initialize();
-		}
-
-		try {
-			executeChaincode(client, channel);
-		} catch (Exception e) {
-			logger.error("exception", e);
-		}
-		return new ResponseEntity<>(
-				response,
-				HttpStatus.OK);
 	}
 
 	@CrossOrigin(origins = "http://localhost:8080")
@@ -98,7 +85,6 @@ public class DemoApplication {
 			logger.error("exception", e);
 		}
  */
-
 		response.put("fundingCount", fundingCount);
 		response.put("likeCount", likeCount);
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -107,22 +93,34 @@ public class DemoApplication {
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping("/tx/{version}/transactions/{action}")
 	public ResponseEntity<String> doTransaction(@RequestParam(value = "from", defaultValue = "World") String from,
-										@RequestParam(value = "input", defaultValue = "null") Object input,
+										@RequestParam(value = "inputs", defaultValue = "null") Object input,
 										@PathVariable("action") String action,
-										@PathVariable("version") String version) {
+										@PathVariable("version") String version,
+										@RequestBody TxRequest inputs) {
 		String response = new String("OK");
 		logger.error(action);
-/*
+
 		if (channel == null) {
 			initialize();
 		}
 
 		try {
-			executeChaincode(client, channel);
+			if (action.equals("funding")) {
+				executeChaincode(client, channel, aValue, "1");
+				executeChaincode(client, channel, cValue, "1000");
+			}
+			if (action.equals("like") ) {
+				executeChaincode(client, channel, bValue, "1");
+			}
+			if (action.equals("purchase") ) {
+				String valueAmount = ((HashMap<String, String>)inputs.getInputs()).get("valueAmount");
+				logger.error(valueAmount);
+				executeChaincode(client, channel, cValue, "-" + ((HashMap<String, String>)inputs.getInputs()).get("valueAmount") );
+			}
 		} catch (Exception e) {
 			logger.error("exception", e);
 		}
- */
+
 		if (action.equals("funding")) fundingCount++;
 		if (action.equals("like")) likeCount++;
 
@@ -131,8 +129,35 @@ public class DemoApplication {
 				HttpStatus.OK);
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping("/tx/{version}/wallets/{action}")
+	public ResponseEntity<Object> doTransaction(@PathVariable("action") String action,
+												@PathVariable("version") String version ) {
+		Map<String, Object> response = new HashMap<>();
+		logger.error(action);
+
+		if (channel == null) {
+			initialize();
+		}
+
+		try {
+			if (action.equals("balance")) {
+				executeChaincodeQuery(client, channel, cValue);
+			}
+		} catch (Exception e) {
+			logger.error("exception", e);
+		}
+
+		// TODO test를 위해 RWT 잔고 체크를 하지 않는다.
+		response.put("balance", Integer.MAX_VALUE);
+
+		return new ResponseEntity<>(
+				response,
+				HttpStatus.OK);
+	}
+
 	private static void initialize() {
-		connectionProfilePath = /*System.getProperty("user.dir")+ */"./connection-profile-standard.yaml";
+		connectionProfilePath = /*System.getProperty("user.dir")+ */"./connection-profile-Hyperledger.yaml";
 		File f = new File(connectionProfilePath);
 		try {
 			javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
@@ -147,14 +172,14 @@ public class DemoApplication {
 			NetworkConfig networkConfig = NetworkConfig.fromYamlFile(f);
 			NetworkConfig.OrgInfo clientOrg = networkConfig.getClientOrganization();
 
-            /* ID/Secret Version */
+            /* ID/Secret Version
             NetworkConfig.CAInfo caInfo = clientOrg.getCertificateAuthorities().get(0);
             FabricUser user = getFabricUser(clientOrg, caInfo);
+			*/
 
-			/* Cert/Key Version
+			/* Cert/Key Version */
 			NetworkConfig.CAInfo caInfo = null;
 			FabricUser user = getFabricUser4Local(clientOrg);
-			*/
 
 			client = HFClient.createNewInstance();
 			client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());
@@ -185,10 +210,10 @@ public class DemoApplication {
 		}
 	}
 	private static void lineBreak() {
-		logger.info("=============================================================");
+		logger.info("--------------------------------------------------------------------------");
 	}
 
-	private static void executeChaincode(HFClient client, Channel channel) throws
+	private static void executeChaincode(HFClient client, Channel channel, String key, String changeValue) throws
 			ProposalException, InvalidArgumentException, UnsupportedEncodingException, InterruptedException,
 			ExecutionException, TimeoutException
 	{
@@ -197,18 +222,19 @@ public class DemoApplication {
 
 		String newValue = String.valueOf(new Random().nextInt(1000));
 
-		executer.executeTransaction(client, channel, true,"invoke", "b", "a", "10");
-		executer.executeTransaction(client, channel, false,"query", "a");
-		executer.executeTransaction(client, channel, false,"query", "b");
-
-		lineBreak();
-
-		executer.executeTransaction(client, channel, true,"invoke", "a", "b", "10");
-		executer.executeTransaction(client, channel, false,"query", "a");
-		executer.executeTransaction(client, channel, false,"query", "b");
-
-
+		executer.executeTransaction(client, channel, true,"invoke", key, changeValue);
+		executer.executeTransaction(client, channel, false,"query", key);
 	}
+
+	private static void executeChaincodeQuery(HFClient client, Channel channel, String key) throws
+			ProposalException, InvalidArgumentException, UnsupportedEncodingException, InterruptedException,
+			ExecutionException, TimeoutException
+	{
+		lineBreak();
+		ChaincodeExecuter executer = new ChaincodeExecuter(chaincodeName, chaincodeVersion);
+		executer.executeTransaction(client, channel, false,"query", key);
+	}
+
 	private static void printChannelInfo(HFClient client, Channel channel) throws
 			ProposalException, InvalidArgumentException, IOException
 	{
@@ -260,7 +286,8 @@ public class DemoApplication {
 		lineBreak();
 
 		String certificate = new String(IOUtils.toByteArray(new FileInputStream(new File("./cert.pem"))), "UTF-8");
-		File privatekeyfile = findFileSk( new File("./"));
+		//File privatekeyfile = findFileSk( new File("./"));
+		File privatekeyfile = new File("./key.pem");
 
 		EnrolleMentImpl enrollment = null;
 		try {

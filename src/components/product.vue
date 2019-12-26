@@ -140,7 +140,7 @@ export default {
   methods: {
     load() { 
       for(let productId = 0; productId < 4; productId++){
-        this.axios.post(`https://api.luniverse.io/tx/v1.0/transactions/${this.txActionName.getOwner}`,{
+        this.axios.post(`http://localhost:8081/tx/v1.0/transactions/getOwner`,{
           'from': this.walletAddress.user,
           'inputs': {
             '_index': productId
@@ -152,10 +152,10 @@ export default {
           }, 
         })
           .then((response) => {
-            if (response.data.data.res[0] !== '') {
+            if(BigNumber(response.data.balance) >= parseInt(this.products[productId].price)){
               this.products[productId].buy='구매 완료';
               this.products[productId].disabled='true';
-              this.products[productId].thx=((response.data.data.res[0])+"님, 구매가 확정되었습니다.");    
+              this.products[productId].thx="구매가 확정되었습니다.";
             }
           })
           .catch(() => {
@@ -167,13 +167,13 @@ export default {
         alert('이미 구매하셨습니다.')
         return
       }
-      this.axios.get(`https://api.luniverse.io/tx/v1.0/wallets/${this.walletAddress.user}/${this.mtSymbol}/${this.stSymbol}/balance`, {
+      this.axios.get(`http://localhost:8081/tx/v1.0/wallets/balance`, {
         headers: {
           'Authorization': `Bearer ${this.apiKey}`,
         },
       })
         .then((response) => {
-          if((BigNumber(response.data.data.balance).div((BigNumber('10')).pow(18)) >= parseInt(this.products[productId].price))){
+          if(response){
             this.purchase(productId);
           }
           else{
@@ -185,11 +185,11 @@ export default {
         })
     },
     purchase(productId){
-      this.axios.post(`https://api.luniverse.io/tx/v1.0/transactions/${this.txActionName.purchase}`,{
+      this.axios.post(`http://localhost:8081/tx/v1.0/transactions/purchase`,{
           'from': this.walletAddress.user,
           'inputs' : {
             'receiverAddress': this.walletAddress.pd,
-            'valueAmount': this.products[productId].price + '000000000000000000',
+            'valueAmount': this.products[productId].price,
           }
         },
       {
@@ -198,7 +198,7 @@ export default {
         },
       })
         .then(() => {
-          this.axios.post(`https://api.luniverse.io/tx/v1.0/transactions/${this.txActionName.setOwner}`,{
+          this.axios.post(`http://localhost:8081/tx/v1.0/transactions/setOwner`,{
               'from': this.walletAddress.user,
               'inputs': {
                 '_index': productId,
@@ -214,7 +214,7 @@ export default {
               alert('구매에 성공하였습니다.')
               this.products[productId].buy='구매 완료';
               this.products[productId].disabled='true';
-              this.axios.post(`https://api.luniverse.io/tx/v1.0/transactions/${this.txActionName.getOwner}`,{
+              this.axios.post(`http://localhost:8081/tx/v1.0/transactions/getOwner`,{
                 'from': this.walletAddress.user,
                 'inputs': {
                   '_index': productId
@@ -223,12 +223,12 @@ export default {
               {
                headers: {
                   'Authorization': `Bearer ${this.apiKey}`,
-                }, 
+                },
               })
                 .then((response) => {
-                  if (response.data.data.res[0] !== '') {
-                    this.products[productId].thx=((response.data.data.res[0])+"님 구매가 확정되었습니다.");    
-                  }
+                    if(BigNumber(response.data.balance) >= parseInt(this.products[productId].price)){
+                      this.products[productId].thx="구매가 확정되었습니다.";
+                    }
                 })
                 .catch(() => {
                   alert('구매 내역 불러오기에 실패했습니다. getOwner 함수를 확인해주세요.')
