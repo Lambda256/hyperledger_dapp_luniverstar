@@ -63,8 +63,8 @@ public class DemoApplication {
 
 	private static HFClient client = null;
 
-	private int fundingCount = 10;
-	private int likeCount = 10;
+	private int fundingCount = 0;
+	private int likeCount = 0;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -88,7 +88,7 @@ public class DemoApplication {
 										@PathVariable("version") String version,
 										@RequestBody TxRequest inputs) {
 		String response = new String("OK");
-		logger.error(action);
+		logger.info(action);
 
 		if (channel == null) {
 			initialize();
@@ -124,7 +124,7 @@ public class DemoApplication {
 	public ResponseEntity<Object> doTransaction(@PathVariable("action") String action,
 												@PathVariable("version") String version ) {
 		Map<String, Object> response = new HashMap<>();
-		logger.error(action);
+		logger.info(action);
 
 		if (channel == null) {
 			initialize();
@@ -182,6 +182,7 @@ public class DemoApplication {
 			logger.error("exception", e);
 		}
 	}
+
 	private static void lineBreak() {
 		logger.info("--------------------------------------------------------------------------");
 	}
@@ -219,9 +220,9 @@ public class DemoApplication {
 			BlockInfo returnedBlock = channel.queryBlockByNumber(current);
 			final long blockNumber = returnedBlock.getBlockNumber();
 
-			logger.info(String.format("Block #%d has previous hash id: %s", blockNumber, Hex.encodeHexString(returnedBlock.getPreviousHash())));
-			logger.info(String.format("Block #%d has data hash: %s", blockNumber, Hex.encodeHexString(returnedBlock.getDataHash())));
-			logger.info(String.format("Block #%d has calculated block hash is %s",
+			logger.info(String.format("Block #%d - previous hash id: %s", blockNumber, Hex.encodeHexString(returnedBlock.getPreviousHash())));
+			logger.info(String.format("Block #%d - data hash: %s", blockNumber, Hex.encodeHexString(returnedBlock.getDataHash())));
+			logger.info(String.format("Block #%d - calculated block hash is %s",
 					blockNumber, Hex.encodeHexString(SDKUtils.calculateBlockHash(client,blockNumber, returnedBlock.getPreviousHash(), returnedBlock.getDataHash()))));
 		}
 
@@ -235,14 +236,14 @@ public class DemoApplication {
 		HFCAClient hfcaClient = HFCAClient.createNewInstance(caInfo);
 		HFCAInfo cainfo = hfcaClient.info();
 		lineBreak();
-		logger.info("CA name: " + cainfo.getCAName());
-		logger.info("CA version: " + cainfo.getVersion());
+		logger.info("CA name : " + cainfo.getCAName());
+		logger.info("CA version : " + cainfo.getVersion());
 
 		// Persistence is not part of SDK.
 
-		logger.info("Going to enroll user: " + userName);
+		logger.info("Going to enroll user : " + userName);
 		Enrollment enrollment = hfcaClient.enroll(userName, secret);
-		logger.info("Enroll user: " + userName +  " successfully.");
+		logger.info("Enroll user : " + userName +  " successfully.");
 
 		FabricUser user = new FabricUser();
 		user.setMspId(clientOrg.getMspId());

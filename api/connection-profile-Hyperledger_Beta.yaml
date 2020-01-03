@@ -9,7 +9,7 @@
 # blockchain network that are necessary for the applications to interact with it. These are all
 # knowledge that must be acquired from out-of-band sources. This file provides such a source.
 #
-name: "Basic-Plan-Network-Config"
+name: "Freetrial-Network-Config"
 
 #
 # Any properties with an "x-" prefix will be treated as application-specific, exactly like how naming
@@ -24,7 +24,7 @@ x-type: "hlfv1"
 #
 # Describe what the target network is/does.
 #
-description: "Basic Plan Network"
+description: "Free Trial Network"
 
 #
 # Schema version of the content. Used by the SDK to apply the corresponding parsing rules.
@@ -118,56 +118,6 @@ organizations:
       - peer0.org1.example.com
       - peer1.org1.example.com
 
-    # [Optional]. Certificate Authorities issue certificates for identification purposes in a Fabric based
-    # network. Typically certificates provisioning is done in a separate process outside of the
-    # runtime network. Fabric-CA is a special certificate authority that provides a REST APIs for
-    # dynamic certificate management (enroll, revoke, re-enroll). The following section is only for
-    # Fabric-CA servers.
-    certificateAuthorities:
-      - ca-org1
-
-    # [Optional]. If the application is going to make requests that are reserved to organization
-    # administrators, including creating/updating channels, installing/instantiating chaincodes, it
-    # must have access to the admin identity represented by the private key and signing certificate.
-    # Both properties can be the PEM string or local path to the PEM file. Note that this is mainly for
-    # convenience in development mode, production systems should not expose sensitive information
-    # this way. The SDK should allow applications to set the org admin identity via APIs, and only use
-    # this route as an alternative when it exists.
-    adminPrivateKey:
-      #path: ./fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/
-      pem:  |
-        -----BEGIN PRIVATE KEY-----
-        MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQghStUKydm3gwPNjMt
-        lsA2KDFRziW4sC/ig8IHKtWoO0GhRANCAAQJjan9WjV89O5yKuVPgPBF3URr81DE
-        Zc0oUKV0PB0ESqjLE4+t/frpU2kZR+KHLXqcCsHoypXjEJH57vsNJrBt
-        -----END PRIVATE KEY-----
-        
-
-    signedCert:
-      #path: ./fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
-      pem:  |
-        -----BEGIN CERTIFICATE-----
-        MIICKjCCAdCgAwIBAgIQYK6EyYfuUuiGDWkptl5PrjAKBggqhkjOPQQDAjBzMQsw
-        CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
-        YW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu
-        b3JnMS5leGFtcGxlLmNvbTAeFw0yMDAxMDIwNzAxMDBaFw0yOTEyMzAwNzAxMDBa
-        MGwxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T
-        YW4gRnJhbmNpc2NvMQ8wDQYDVQQLEwZjbGllbnQxHzAdBgNVBAMMFkFkbWluQG9y
-        ZzEuZXhhbXBsZS5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQJjan9WjV8
-        9O5yKuVPgPBF3URr81DEZc0oUKV0PB0ESqjLE4+t/frpU2kZR+KHLXqcCsHoypXj
-        EJH57vsNJrBto00wSzAOBgNVHQ8BAf8EBAMCB4AwDAYDVR0TAQH/BAIwADArBgNV
-        HSMEJDAigCCOj9X9Zz/gsQj2QzIv2tUUuqI9tfF0OH5KLR6pS4h/ATAKBggqhkjO
-        PQQDAgNIADBFAiEA/88B4DCU9fLiQb2QfiUF2egVvlg47s41L9BrzO52Eo0CIB/J
-        E06YrIwilXDwuiDqmaq2P3aY4/+iN8xY74+2o+Z+
-        -----END CERTIFICATE-----
-        
-
-  # the profile will contain public information about organizations other than the one it belongs to.
-  # These are necessary information to make transaction lifecycles work, including MSP IDs and
-  # peers with a public URL to send transaction proposals. The file will not contain private
-  # information reserved for members of the organization, such as admin key and certificate,
-  # fabric-ca registrar enroll ID and secret, etc.
-
 #
 # List of orderers to send transaction and channel create/update requests to. For the time
 # being only one orderer is needed. If more than one is defined, which one get used by the
@@ -194,19 +144,19 @@ orderers:
     tlsCACerts:
       pem:  |
         -----BEGIN CERTIFICATE-----
-        MIICQjCCAemgAwIBAgIQF//SkhYud8DhOFMtuW+Z/TAKBggqhkjOPQQDAjBsMQsw
+        MIICQjCCAemgAwIBAgIQdH7IZlnQI1QNhX9ZvWv9qDAKBggqhkjOPQQDAjBsMQsw
         CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
         YW5jaXNjbzEUMBIGA1UEChMLZXhhbXBsZS5jb20xGjAYBgNVBAMTEXRsc2NhLmV4
-        YW1wbGUuY29tMB4XDTIwMDEwMjA3MDEwMFoXDTI5MTIzMDA3MDEwMFowbDELMAkG
+        YW1wbGUuY29tMB4XDTIwMDEwMzA1NTEwMFoXDTI5MTIzMTA1NTEwMFowbDELMAkG
         A1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBGcmFu
         Y2lzY28xFDASBgNVBAoTC2V4YW1wbGUuY29tMRowGAYDVQQDExF0bHNjYS5leGFt
-        cGxlLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNv8h7NuMmBvJLZPe+rS
-        bs3hYSE200GnSJHKBsNX0bPQ0ta752fVmX4bxFDxWpx4fXOdneZVvW2zfsn5M1te
-        Yh2jbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYB
-        BQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EIgQgmU44GMsaTb+jKRYQ7vCQ
-        M/XyhTeC5JQUMZw1wIR9g2EwCgYIKoZIzj0EAwIDRwAwRAIgJuoMVyQE+xWdyJOF
-        wIyB0onR+/9KHj9L/BzJ5rNtFKICIBiU+L4OhyXXCglvbbigOfEIitZcpryv0EB/
-        EURo/5rn
+        cGxlLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABL1l6Qjn4azPzjNPLxeI
+        jWODug4l015Q1fa/ZTtwwLvFU+MdrIrGjMzCpBxtjCtDHkC5hfqvjhDGKF7uOAs+
+        gAujbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYB
+        BQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EIgQgOFe4Cgt+C/9hsBmmPKYB
+        XiAb7GQ8U8BbqSQS2yLk0bMwCgYIKoZIzj0EAwIDRwAwRAIgSGWcBp+1tutfVMaS
+        iW7EkylB0vSOBX1U+N2wksvomgQCIBTmK92RtuLrj29HjnxsPQUziogtAnc74THb
+        1Nl3MtGR
         -----END CERTIFICATE-----
         
 
@@ -232,19 +182,19 @@ peers:
     tlsCACerts:
       pem:  |
         -----BEGIN CERTIFICATE-----
-        MIICZzCCAg2gAwIBAgIQAkpOC/QyTqOXQ6V+cgMgMDAKBggqhkjOPQQDAjB2MQsw
+        MIICZzCCAg2gAwIBAgIQLgNBc22lfFF0cL8lqvIluDAKBggqhkjOPQQDAjB2MQsw
         CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
         YW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEfMB0GA1UEAxMWdGxz
-        Y2Eub3JnMS5leGFtcGxlLmNvbTAeFw0yMDAxMDIwNzAxMDBaFw0yOTEyMzAwNzAx
+        Y2Eub3JnMS5leGFtcGxlLmNvbTAeFw0yMDAxMDMwNTUxMDBaFw0yOTEyMzEwNTUx
         MDBaMFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQH
         Ew1TYW4gRnJhbmNpc2NvMR8wHQYDVQQDExZwZWVyMC5vcmcxLmV4YW1wbGUuY29t
-        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEWPe2aOIWMgl9TW3Aomhm+WUmfOs3
-        GZG/JyZrKG7A8atMJvIRZfdsbTYamqlt1kIfOAFY5X0L9JBMHEfBLdn8J6OBlzCB
+        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAECTTZrepRPDHYdY0B7Pn0SscRzyaR
+        /d2Her6RVb6+qFYvunuuNS5Nj2HD0WnP3LjSJS4kF9zZjNzNnFmHZ9L7aaOBlzCB
         lDAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMC
-        MAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgewG9hANSh7w+i05LIZDtxjNpfCXF
-        4nm+7kkjJ5ikHCkwKAYDVR0RBCEwH4IWcGVlcjAub3JnMS5leGFtcGxlLmNvbYIF
-        cGVlcjAwCgYIKoZIzj0EAwIDSAAwRQIhAJW5rZAtCwfCxHRrwACYzxTFxowXrISa
-        AoG49WnxtXK2AiA8uWaFWZKnuJO28bFYOMlGxJzAIPzz4lxRLKBa55E2MA==
+        MAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgLJWjxejioD+2VJqE3TGy75I4nmYM
+        lIQq5hO2NOSpICwwKAYDVR0RBCEwH4IWcGVlcjAub3JnMS5leGFtcGxlLmNvbYIF
+        cGVlcjAwCgYIKoZIzj0EAwIDSAAwRQIhAJzS47UTFG3Ii/e4c51UAaUXY1e554e8
+        nZjIShAMWjLSAiB43veCPYwRH/uM21LQLg20/I+nzpmjE+OlypNlBht0ow==
         -----END CERTIFICATE-----
         
 
@@ -264,40 +214,18 @@ peers:
     tlsCACerts:
       pem:  |
         -----BEGIN CERTIFICATE-----
-        MIICZzCCAg6gAwIBAgIRAOcT9jzOfrPaYNvr3RCzqy8wCgYIKoZIzj0EAwIwdjEL
+        MIICaDCCAg6gAwIBAgIRAKWBiVaL6gcNsRuQdkcyG2cwCgYIKoZIzj0EAwIwdjEL
         MAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG
         cmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHzAdBgNVBAMTFnRs
-        c2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMjAwMTAyMDcwMTAwWhcNMjkxMjMwMDcw
+        c2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMjAwMTAzMDU1MTAwWhcNMjkxMjMxMDU1
         MTAwWjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UE
         BxMNU2FuIEZyYW5jaXNjbzEfMB0GA1UEAxMWcGVlcjEub3JnMS5leGFtcGxlLmNv
-        bTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABLy1TZ1JPuAhxHt1lFZAJjrdbTOn
-        ph0fCo2FnfeccpXqeDihPAZx4PWo35xczdnJYI5MB1gDlISGTBf55WxWsHGjgZcw
+        bTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABHCv9X6u3Q85TTH7kYK5m8r3Tf4c
+        cbSP5PRPnw5skgpI+YIdnFwRs9rRrtpYajw0NITqTRmdbFjcbQMPk2RxtvOjgZcw
         gZQwDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcD
-        AjAMBgNVHRMBAf8EAjAAMCsGA1UdIwQkMCKAIHsBvYQDUoe8PotOSyGQ7cYzaXwl
-        xeJ5vu5JIyeYpBwpMCgGA1UdEQQhMB+CFnBlZXIxLm9yZzEuZXhhbXBsZS5jb22C
-        BXBlZXIxMAoGCCqGSM49BAMCA0cAMEQCIBFBi1qcfP+UeQ/lT4XjYXu1wBDvxu4F
-        Czlr5aXLFFXmAiA70Z0duJvACkFOVvqiG+X0VaMOjBtRYn6pBNT9Uwu4ow==
+        AjAMBgNVHRMBAf8EAjAAMCsGA1UdIwQkMCKAICyVo8Xo4qA/tlSahN0xsu+SOJ5m
+        DJSEKuYTtjTkqSAsMCgGA1UdEQQhMB+CFnBlZXIxLm9yZzEuZXhhbXBsZS5jb22C
+        BXBlZXIxMAoGCCqGSM49BAMCA0gAMEUCIQCeXTCyhaBwd0AIvKUqTEud0Ma3Of3b
+        RGUe3BgmMyHCVwIgWQIrLwQ0RuPMzdWOs8cIJW68tNM/M4n4nPcJg2EbpWA=
         -----END CERTIFICATE-----
         
-
-#
-# Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
-# certificate management to be done via REST APIs. Application may choose to use a standard
-# Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
-#
-certificateAuthorities:
-  ca-org1:
-    url: http://hyper-4053561120315537863.luniverse.dev:7054
-    # the properties specified under this object are passed to the 'http' client verbatim when
-    # making the request to the Fabric-CA server
-    httpOptions:
-      verify: true
-
-    # Fabric-CA supports dynamic user enrollment via REST APIs. A "root" user, a.k.a registrar, is
-    # needed to enroll and invoke new users.
-    registrar: #single entitiy
-      - enrollId: admin
-        enrollSecret: adminpw
-    # [Optional] The optional name of the CA.
-    caName: ca-org1
-
