@@ -9,7 +9,7 @@
 # blockchain network that are necessary for the applications to interact with it. These are all
 # knowledge that must be acquired from out-of-band sources. This file provides such a source.
 #
-name: "Basic-Plan-Network-Config"
+name: "Freetrial-Network-Config"
 
 #
 # Any properties with an "x-" prefix will be treated as application-specific, exactly like how naming
@@ -24,7 +24,7 @@ x-type: "hlfv1"
 #
 # Describe what the target network is/does.
 #
-description: "Basic Plan Network"
+description: "Free Trial Network"
 
 #
 # Schema version of the content. Used by the SDK to apply the corresponding parsing rules.
@@ -100,10 +100,10 @@ channels:
         ledgerQuery: true
         eventSource: true
 
-    # [Optional]. what chaincodes are expected to exist on this channel? The application can use
-    # this information to validate that the target peers are in the expected state by comparing
-    # this list with the query results of getInstalledChaincodes() and getInstantiatedChaincodes()
-    #chaincodes:
+      # [Optional]. what chaincodes are expected to exist on this channel? The application can use
+      # this information to validate that the target peers are in the expected state by comparing
+      # this list with the query results of getInstalledChaincodes() and getInstantiatedChaincodes()
+      #chaincodes:
       # the format follows the "cannonical name" of chaincodes by fabric code
       #- mycc:1.0
 
@@ -118,56 +118,6 @@ organizations:
       - peer0.org1.example.com
       - peer1.org1.example.com
 
-    # [Optional]. Certificate Authorities issue certificates for identification purposes in a Fabric based
-    # network. Typically certificates provisioning is done in a separate process outside of the
-    # runtime network. Fabric-CA is a special certificate authority that provides a REST APIs for
-    # dynamic certificate management (enroll, revoke, re-enroll). The following section is only for
-    # Fabric-CA servers.
-    certificateAuthorities:
-      - ca-org1
-
-    # [Optional]. If the application is going to make requests that are reserved to organization
-    # administrators, including creating/updating channels, installing/instantiating chaincodes, it
-    # must have access to the admin identity represented by the private key and signing certificate.
-    # Both properties can be the PEM string or local path to the PEM file. Note that this is mainly for
-    # convenience in development mode, production systems should not expose sensitive information
-    # this way. The SDK should allow applications to set the org admin identity via APIs, and only use
-    # this route as an alternative when it exists.
-    adminPrivateKey:
-      #path: ./fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/
-      pem:  |
-        -----BEGIN PRIVATE KEY-----
-        MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgRiEjTfZUNBBLLd5e
-        9AQlgIes0aSKOBAVX16+BCh8GHahRANCAAQBueyvhURqDu8or0nSdtZ6EvOzOn0H
-        pbskHp5IyiZj6qvpAnTPO2vNbqdFv1UA9rj99oEvvC8lvp6Hn7+ruYfD
-        -----END PRIVATE KEY-----
-
-
-    signedCert:
-      #path: ./fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
-      pem:  |
-        -----BEGIN CERTIFICATE-----
-        MIICKTCCAdCgAwIBAgIQNd4i4FfRDHaIJwgKdnN0+DAKBggqhkjOPQQDAjBzMQsw
-        CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
-        YW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu
-        b3JnMS5leGFtcGxlLmNvbTAeFw0xOTEyMTkwMzM5MDBaFw0yOTEyMTYwMzM5MDBa
-        MGwxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T
-        YW4gRnJhbmNpc2NvMQ8wDQYDVQQLEwZjbGllbnQxHzAdBgNVBAMMFkFkbWluQG9y
-        ZzEuZXhhbXBsZS5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQBueyvhURq
-        Du8or0nSdtZ6EvOzOn0HpbskHp5IyiZj6qvpAnTPO2vNbqdFv1UA9rj99oEvvC8l
-        vp6Hn7+ruYfDo00wSzAOBgNVHQ8BAf8EBAMCB4AwDAYDVR0TAQH/BAIwADArBgNV
-        HSMEJDAigCAj/DhEn39YEM/iwB8WWNb8JRMEA2rTXAAyvHAy7r+frTAKBggqhkjO
-        PQQDAgNHADBEAiBcsgFH8Jczjt9fB2FSm2DOpwlnoDVijIzp3kAW55ipXQIgDkt6
-        33VdQ3Vx+IoZv+VrPE6obQKs5kaEtK3SlHVZHqk=
-        -----END CERTIFICATE-----
-        
-
-  # the profile will contain public information about organizations other than the one it belongs to.
-  # These are necessary information to make transaction lifecycles work, including MSP IDs and
-  # peers with a public URL to send transaction proposals. The file will not contain private
-  # information reserved for members of the organization, such as admin key and certificate,
-  # fabric-ca registrar enroll ID and secret, etc.
-
 #
 # List of orderers to send transaction and channel create/update requests to. For the time
 # being only one orderer is needed. If more than one is defined, which one get used by the
@@ -175,12 +125,12 @@ organizations:
 #
 orderers:
   orderer.example.com:
-    url: grpcs://localhost:7050
+    url: grpcs://hyper-4053561120315537863.luniverse.dev:7050
 
     # these are standard properties defined by the gRPC library
     # they will be passed in as-is to gRPC client constructor
     grpcOptions:
-#      ssl-target-name-override: orderer.example.com
+      #      ssl-target-name-override: orderer.example.com
       sslProvider: openSSL
       negotiationType: TLS
       hostnameOverride: orderer.example.com
@@ -188,27 +138,26 @@ orderers:
       grpc.keepalive_time_ms: 360000
       grpc.keepalive_timeout_ms: 180000
 
-    #tlsCACerts:
+      #tlsCACerts:
       #path: ./fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
 
     tlsCACerts:
       pem:  |
         -----BEGIN CERTIFICATE-----
-        MIICQjCCAemgAwIBAgIQdTdtewsHasKkQf6TQGDO0zAKBggqhkjOPQQDAjBsMQsw
+        MIICQjCCAemgAwIBAgIQF//SkhYud8DhOFMtuW+Z/TAKBggqhkjOPQQDAjBsMQsw
         CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
         YW5jaXNjbzEUMBIGA1UEChMLZXhhbXBsZS5jb20xGjAYBgNVBAMTEXRsc2NhLmV4
-        YW1wbGUuY29tMB4XDTE5MTIxOTAzMzkwMFoXDTI5MTIxNjAzMzkwMFowbDELMAkG
+        YW1wbGUuY29tMB4XDTIwMDEwMjA3MDEwMFoXDTI5MTIzMDA3MDEwMFowbDELMAkG
         A1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBGcmFu
         Y2lzY28xFDASBgNVBAoTC2V4YW1wbGUuY29tMRowGAYDVQQDExF0bHNjYS5leGFt
-        cGxlLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABBtBRHU+kiKd/A6/okpz
-        dV+gZCzes0Ptkkbf+IvAapFM6sx4y5vMrs+sYNxzxy3TJyauLleAN4yIaEazJXHg
-        J6GjbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYB
-        BQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EIgQgkjLumJSZKQZxrI7vqgG0
-        3b0yuG43Nrax9OIVZHHqNYUwCgYIKoZIzj0EAwIDRwAwRAIgLCLtIZ9+55TWCR3n
-        PMVEVnxjbok9Pe2tXFRwea78AWYCIH0AVHpF6tT/yqsNxXZ2vsUL6zNFw1bkqB9r
-        nhaUE3Lt
+        cGxlLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABNv8h7NuMmBvJLZPe+rS
+        bs3hYSE200GnSJHKBsNX0bPQ0ta752fVmX4bxFDxWpx4fXOdneZVvW2zfsn5M1te
+        Yh2jbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYB
+        BQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EIgQgmU44GMsaTb+jKRYQ7vCQ
+        M/XyhTeC5JQUMZw1wIR9g2EwCgYIKoZIzj0EAwIDRwAwRAIgJuoMVyQE+xWdyJOF
+        wIyB0onR+/9KHj9L/BzJ5rNtFKICIBiU+L4OhyXXCglvbbigOfEIitZcpryv0EB/
+        EURo/5rn
         -----END CERTIFICATE-----
-        
 
 #
 # List of peers to send various requests to, including endorsement, query
@@ -217,7 +166,7 @@ orderers:
 peers:
   peer0.org1.example.com:
     # this URL is used to send endorsement and query requests
-    url: grpcs://localhost:7051
+    url: grpcs://hyper-4053561120315537863.luniverse.dev:7051
 
     grpcOptions:
       grpc.http2.keepalive_time: 15
@@ -226,30 +175,29 @@ peers:
       sslProvider: openSSL
       hostnameOverride: peer0.org1.example.com
 
-    #tlsCACerts:
+      #tlsCACerts:
       #path: ./fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
 
     tlsCACerts:
       pem:  |
         -----BEGIN CERTIFICATE-----
-        MIICZzCCAg6gAwIBAgIRALYMU+pGgZR2N37qP/sB+ZowCgYIKoZIzj0EAwIwdjEL
-        MAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG
-        cmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHzAdBgNVBAMTFnRs
-        c2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMTkxMjE5MDMzOTAwWhcNMjkxMjE2MDMz
-        OTAwWjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UE
-        BxMNU2FuIEZyYW5jaXNjbzEfMB0GA1UEAxMWcGVlcjAub3JnMS5leGFtcGxlLmNv
-        bTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABIpcdAPHqs5v9j8+I14u5sGXr1hY
-        ngmRkS5rwUDNcwYvPdfqep2WCRXw8Zmdg5vFsjE602VsBDCmrVxqgjjpAGCjgZcw
-        gZQwDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcD
-        AjAMBgNVHRMBAf8EAjAAMCsGA1UdIwQkMCKAIBK5tg2NGebOSpV9IERE7+ewTmxn
-        MSmsWvJbe9tkiOezMCgGA1UdEQQhMB+CFnBlZXIwLm9yZzEuZXhhbXBsZS5jb22C
-        BXBlZXIwMAoGCCqGSM49BAMCA0cAMEQCID+aA5aXKw8EOxWKnNL2ZLdOhRA6eC6W
-        dWRdjBV17xehAiAJRPHmQhoTaUQSmxU4Kv43iSiKV/P31S26auGoSGIMgA==
+        MIICZzCCAg2gAwIBAgIQAkpOC/QyTqOXQ6V+cgMgMDAKBggqhkjOPQQDAjB2MQsw
+        CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
+        YW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEfMB0GA1UEAxMWdGxz
+        Y2Eub3JnMS5leGFtcGxlLmNvbTAeFw0yMDAxMDIwNzAxMDBaFw0yOTEyMzAwNzAx
+        MDBaMFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQH
+        Ew1TYW4gRnJhbmNpc2NvMR8wHQYDVQQDExZwZWVyMC5vcmcxLmV4YW1wbGUuY29t
+        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEWPe2aOIWMgl9TW3Aomhm+WUmfOs3
+        GZG/JyZrKG7A8atMJvIRZfdsbTYamqlt1kIfOAFY5X0L9JBMHEfBLdn8J6OBlzCB
+        lDAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMC
+        MAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgewG9hANSh7w+i05LIZDtxjNpfCXF
+        4nm+7kkjJ5ikHCkwKAYDVR0RBCEwH4IWcGVlcjAub3JnMS5leGFtcGxlLmNvbYIF
+        cGVlcjAwCgYIKoZIzj0EAwIDSAAwRQIhAJW5rZAtCwfCxHRrwACYzxTFxowXrISa
+        AoG49WnxtXK2AiA8uWaFWZKnuJO28bFYOMlGxJzAIPzz4lxRLKBa55E2MA==
         -----END CERTIFICATE-----
-        
 
   peer1.org1.example.com:
-    url: grpcs://localhost:8051
+    url: grpcs://hyper-4053561120315537863.luniverse.dev:8051
 
     grpcOptions:
       grpc.http2.keepalive_time: 15
@@ -258,46 +206,23 @@ peers:
       sslProvider: openSSL
       hostnameOverride: peer1.org1.example.com
 
-    #tlsCACerts:
+      #tlsCACerts:
       #path: ./fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/server.crt
 
     tlsCACerts:
       pem:  |
         -----BEGIN CERTIFICATE-----
-        MIICaDCCAg6gAwIBAgIRAOEqKj3hpWJWnODEcdQxvsgwCgYIKoZIzj0EAwIwdjEL
+        MIICZzCCAg6gAwIBAgIRAOcT9jzOfrPaYNvr3RCzqy8wCgYIKoZIzj0EAwIwdjEL
         MAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG
         cmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHzAdBgNVBAMTFnRs
-        c2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMTkxMjE5MDMzOTAwWhcNMjkxMjE2MDMz
-        OTAwWjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UE
+        c2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMjAwMTAyMDcwMTAwWhcNMjkxMjMwMDcw
+        MTAwWjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UE
         BxMNU2FuIEZyYW5jaXNjbzEfMB0GA1UEAxMWcGVlcjEub3JnMS5leGFtcGxlLmNv
-        bTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABHDE2Wap9BTEAcbcOynlGwAj8570
-        h/FCTFRFzksZhEf8Cfx2T9IisK/3Xe8ug/JZpuxwQjNxRWDs+brHDOgeWGejgZcw
+        bTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABLy1TZ1JPuAhxHt1lFZAJjrdbTOn
+        ph0fCo2FnfeccpXqeDihPAZx4PWo35xczdnJYI5MB1gDlISGTBf55WxWsHGjgZcw
         gZQwDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcD
-        AjAMBgNVHRMBAf8EAjAAMCsGA1UdIwQkMCKAIBK5tg2NGebOSpV9IERE7+ewTmxn
-        MSmsWvJbe9tkiOezMCgGA1UdEQQhMB+CFnBlZXIxLm9yZzEuZXhhbXBsZS5jb22C
-        BXBlZXIxMAoGCCqGSM49BAMCA0gAMEUCIQCOMq9BEeVwuv19XMgTI6RALuJ1S0HC
-        wngbua/+U2LnYAIgVV2OSgKRYpGb1mix7xXroIjdxUeSJXQx/IXpZlNHKHA=
+        AjAMBgNVHRMBAf8EAjAAMCsGA1UdIwQkMCKAIHsBvYQDUoe8PotOSyGQ7cYzaXwl
+        xeJ5vu5JIyeYpBwpMCgGA1UdEQQhMB+CFnBlZXIxLm9yZzEuZXhhbXBsZS5jb22C
+        BXBlZXIxMAoGCCqGSM49BAMCA0cAMEQCIBFBi1qcfP+UeQ/lT4XjYXu1wBDvxu4F
+        Czlr5aXLFFXmAiA70Z0duJvACkFOVvqiG+X0VaMOjBtRYn6pBNT9Uwu4ow==
         -----END CERTIFICATE-----
-        
-
-#
-# Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
-# certificate management to be done via REST APIs. Application may choose to use a standard
-# Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
-#
-certificateAuthorities:
-  ca-org1:
-    url: http://localhost:7054
-    # the properties specified under this object are passed to the 'http' client verbatim when
-    # making the request to the Fabric-CA server
-    httpOptions:
-      verify: true
-
-    # Fabric-CA supports dynamic user enrollment via REST APIs. A "root" user, a.k.a registrar, is
-    # needed to enroll and invoke new users.
-    registrar: #single entitiy
-      - enrollId: admin
-        enrollSecret: adminpw
-    # [Optional] The optional name of the CA.
-    caName: ca-org1
-

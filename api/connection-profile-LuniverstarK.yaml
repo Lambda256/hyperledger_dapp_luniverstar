@@ -137,28 +137,28 @@ organizations:
       #path: ./fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/
       pem:  |
         -----BEGIN PRIVATE KEY-----
-        MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgRiEjTfZUNBBLLd5e
-        9AQlgIes0aSKOBAVX16+BCh8GHahRANCAAQBueyvhURqDu8or0nSdtZ6EvOzOn0H
-        pbskHp5IyiZj6qvpAnTPO2vNbqdFv1UA9rj99oEvvC8lvp6Hn7+ruYfD
+        MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgCOrQWMH+T+4ZuUZb
+        i/7AkiqHEX01g+YLKsI4ZbhRtrmhRANCAARdTeATx9fY4zKMt6qMA7zOVb1BNZdD
+        upgYBQYelxC3GnXmX4SoRZdS+c/DusK2EqxlJUxu2mXBsRa2+EA/3vm+
         -----END PRIVATE KEY-----
-
+        
 
     signedCert:
       #path: ./fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
       pem:  |
         -----BEGIN CERTIFICATE-----
-        MIICKTCCAdCgAwIBAgIQNd4i4FfRDHaIJwgKdnN0+DAKBggqhkjOPQQDAjBzMQsw
+        MIICKjCCAdCgAwIBAgIQeoSftaOtMdvB9D10m2woTjAKBggqhkjOPQQDAjBzMQsw
         CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
         YW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu
-        b3JnMS5leGFtcGxlLmNvbTAeFw0xOTEyMTkwMzM5MDBaFw0yOTEyMTYwMzM5MDBa
+        b3JnMS5leGFtcGxlLmNvbTAeFw0xOTEyMjAwMjA1MDBaFw0yOTEyMTcwMjA1MDBa
         MGwxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T
         YW4gRnJhbmNpc2NvMQ8wDQYDVQQLEwZjbGllbnQxHzAdBgNVBAMMFkFkbWluQG9y
-        ZzEuZXhhbXBsZS5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQBueyvhURq
-        Du8or0nSdtZ6EvOzOn0HpbskHp5IyiZj6qvpAnTPO2vNbqdFv1UA9rj99oEvvC8l
-        vp6Hn7+ruYfDo00wSzAOBgNVHQ8BAf8EBAMCB4AwDAYDVR0TAQH/BAIwADArBgNV
-        HSMEJDAigCAj/DhEn39YEM/iwB8WWNb8JRMEA2rTXAAyvHAy7r+frTAKBggqhkjO
-        PQQDAgNHADBEAiBcsgFH8Jczjt9fB2FSm2DOpwlnoDVijIzp3kAW55ipXQIgDkt6
-        33VdQ3Vx+IoZv+VrPE6obQKs5kaEtK3SlHVZHqk=
+        ZzEuZXhhbXBsZS5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARdTeATx9fY
+        4zKMt6qMA7zOVb1BNZdDupgYBQYelxC3GnXmX4SoRZdS+c/DusK2EqxlJUxu2mXB
+        sRa2+EA/3vm+o00wSzAOBgNVHQ8BAf8EBAMCB4AwDAYDVR0TAQH/BAIwADArBgNV
+        HSMEJDAigCCmiYJlgZNI+xEpqqcIcO/r4r5X161bhxyniaxekUDNhjAKBggqhkjO
+        PQQDAgNIADBFAiEAgNebuSvsKHDitBG/tXZV0gNUYFjMi9jP88vfKwMHwq0CIHej
+        Qeu5iHJLVgx5hluoahrflRQ1j+/IX7IoM3FinvAC
         -----END CERTIFICATE-----
         
 
@@ -175,7 +175,7 @@ organizations:
 #
 orderers:
   orderer.example.com:
-    url: grpcs://localhost:7050
+    url: grpcs://luniv-7121063718640235758.luniverse.dev:7050
 
     # these are standard properties defined by the gRPC library
     # they will be passed in as-is to gRPC client constructor
@@ -194,19 +194,19 @@ orderers:
     tlsCACerts:
       pem:  |
         -----BEGIN CERTIFICATE-----
-        MIICQjCCAemgAwIBAgIQdTdtewsHasKkQf6TQGDO0zAKBggqhkjOPQQDAjBsMQsw
-        CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
-        YW5jaXNjbzEUMBIGA1UEChMLZXhhbXBsZS5jb20xGjAYBgNVBAMTEXRsc2NhLmV4
-        YW1wbGUuY29tMB4XDTE5MTIxOTAzMzkwMFoXDTI5MTIxNjAzMzkwMFowbDELMAkG
-        A1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBGcmFu
-        Y2lzY28xFDASBgNVBAoTC2V4YW1wbGUuY29tMRowGAYDVQQDExF0bHNjYS5leGFt
-        cGxlLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABBtBRHU+kiKd/A6/okpz
-        dV+gZCzes0Ptkkbf+IvAapFM6sx4y5vMrs+sYNxzxy3TJyauLleAN4yIaEazJXHg
-        J6GjbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYB
-        BQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EIgQgkjLumJSZKQZxrI7vqgG0
-        3b0yuG43Nrax9OIVZHHqNYUwCgYIKoZIzj0EAwIDRwAwRAIgLCLtIZ9+55TWCR3n
-        PMVEVnxjbok9Pe2tXFRwea78AWYCIH0AVHpF6tT/yqsNxXZ2vsUL6zNFw1bkqB9r
-        nhaUE3Lt
+        MIICQzCCAeqgAwIBAgIRAJVYzLwEulFNPAC/+3r921IwCgYIKoZIzj0EAwIwbDEL
+        MAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG
+        cmFuY2lzY28xFDASBgNVBAoTC2V4YW1wbGUuY29tMRowGAYDVQQDExF0bHNjYS5l
+        eGFtcGxlLmNvbTAeFw0xOTEyMjAwMjA1MDBaFw0yOTEyMTcwMjA1MDBaMGwxCzAJ
+        BgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJh
+        bmNpc2NvMRQwEgYDVQQKEwtleGFtcGxlLmNvbTEaMBgGA1UEAxMRdGxzY2EuZXhh
+        bXBsZS5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARnzzONnFmKTSHRAnz+
+        TyFxr0oIrGvY+1e2PsIkXvMraFXQ8IGRpEhviJUkZ2LWxnPAmm2qPRpLcizhHlDM
+        LLB5o20wazAOBgNVHQ8BAf8EBAMCAaYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsG
+        AQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8wKQYDVR0OBCIEIE65y1qdQC+aG0SLylXb
+        pUd4dbeK/S2xuuNrWXYqAoM+MAoGCCqGSM49BAMCA0cAMEQCICe9W5TuVNgVKbGy
+        qU4OwqGUxshyqU9tUGl5HYjMDdpCAiAeYo14L12d4I8Sn0i9WMa+x339NuOReoUW
+        eruuJUrQUA==
         -----END CERTIFICATE-----
         
 
@@ -217,7 +217,7 @@ orderers:
 peers:
   peer0.org1.example.com:
     # this URL is used to send endorsement and query requests
-    url: grpcs://localhost:7051
+    url: grpcs://luniv-7121063718640235758.luniverse.dev:7051
 
     grpcOptions:
       grpc.http2.keepalive_time: 15
@@ -232,24 +232,24 @@ peers:
     tlsCACerts:
       pem:  |
         -----BEGIN CERTIFICATE-----
-        MIICZzCCAg6gAwIBAgIRALYMU+pGgZR2N37qP/sB+ZowCgYIKoZIzj0EAwIwdjEL
-        MAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG
-        cmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHzAdBgNVBAMTFnRs
-        c2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMTkxMjE5MDMzOTAwWhcNMjkxMjE2MDMz
-        OTAwWjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UE
-        BxMNU2FuIEZyYW5jaXNjbzEfMB0GA1UEAxMWcGVlcjAub3JnMS5leGFtcGxlLmNv
-        bTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABIpcdAPHqs5v9j8+I14u5sGXr1hY
-        ngmRkS5rwUDNcwYvPdfqep2WCRXw8Zmdg5vFsjE602VsBDCmrVxqgjjpAGCjgZcw
-        gZQwDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcD
-        AjAMBgNVHRMBAf8EAjAAMCsGA1UdIwQkMCKAIBK5tg2NGebOSpV9IERE7+ewTmxn
-        MSmsWvJbe9tkiOezMCgGA1UdEQQhMB+CFnBlZXIwLm9yZzEuZXhhbXBsZS5jb22C
-        BXBlZXIwMAoGCCqGSM49BAMCA0cAMEQCID+aA5aXKw8EOxWKnNL2ZLdOhRA6eC6W
-        dWRdjBV17xehAiAJRPHmQhoTaUQSmxU4Kv43iSiKV/P31S26auGoSGIMgA==
+        MIICZzCCAg2gAwIBAgIQK3FXSQRceE2G5vaGixkJpDAKBggqhkjOPQQDAjB2MQsw
+        CQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy
+        YW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEfMB0GA1UEAxMWdGxz
+        Y2Eub3JnMS5leGFtcGxlLmNvbTAeFw0xOTEyMjAwMjA1MDBaFw0yOTEyMTcwMjA1
+        MDBaMFsxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQH
+        Ew1TYW4gRnJhbmNpc2NvMR8wHQYDVQQDExZwZWVyMC5vcmcxLmV4YW1wbGUuY29t
+        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEfPxxME0GuP79LkQK05EFX8G4mEt2
+        LLUQ7qHH88YYOMPVbIMyyJyJhRufCFY9xHl0tB+TLzFpcnivXZUFjrjY/aOBlzCB
+        lDAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMC
+        MAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQwIoAgG0ciFFVx03dCEsYzmetDQQY+Ks8U
+        /jKcQYL2a+dFv6YwKAYDVR0RBCEwH4IWcGVlcjAub3JnMS5leGFtcGxlLmNvbYIF
+        cGVlcjAwCgYIKoZIzj0EAwIDSAAwRQIhANFDWoQO1IGLl/VPbF+RGocyQKDDBafJ
+        L7olREzmzbiFAiBphR+0xKlMLU9faTQOnPDgZAo/kbAZkOUox4RQ8kZHMg==
         -----END CERTIFICATE-----
         
 
   peer1.org1.example.com:
-    url: grpcs://localhost:8051
+    url: grpcs://luniv-7121063718640235758.luniverse.dev:8051
 
     grpcOptions:
       grpc.http2.keepalive_time: 15
@@ -264,19 +264,19 @@ peers:
     tlsCACerts:
       pem:  |
         -----BEGIN CERTIFICATE-----
-        MIICaDCCAg6gAwIBAgIRAOEqKj3hpWJWnODEcdQxvsgwCgYIKoZIzj0EAwIwdjEL
+        MIICaDCCAg6gAwIBAgIRAPlRaiNnD31L9CopKbm1vygwCgYIKoZIzj0EAwIwdjEL
         MAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG
         cmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHzAdBgNVBAMTFnRs
-        c2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMTkxMjE5MDMzOTAwWhcNMjkxMjE2MDMz
-        OTAwWjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UE
+        c2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMTkxMjIwMDIwNTAwWhcNMjkxMjE3MDIw
+        NTAwWjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UE
         BxMNU2FuIEZyYW5jaXNjbzEfMB0GA1UEAxMWcGVlcjEub3JnMS5leGFtcGxlLmNv
-        bTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABHDE2Wap9BTEAcbcOynlGwAj8570
-        h/FCTFRFzksZhEf8Cfx2T9IisK/3Xe8ug/JZpuxwQjNxRWDs+brHDOgeWGejgZcw
+        bTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABPvyL/O9PvuZh1PwW1JCe9A9KhKd
+        mVUU9pWzQI7od+VAp9ag1jYsdi2Z6hV+V5C17xGtZEBreXZ56jjVe0OxCc6jgZcw
         gZQwDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcD
-        AjAMBgNVHRMBAf8EAjAAMCsGA1UdIwQkMCKAIBK5tg2NGebOSpV9IERE7+ewTmxn
-        MSmsWvJbe9tkiOezMCgGA1UdEQQhMB+CFnBlZXIxLm9yZzEuZXhhbXBsZS5jb22C
-        BXBlZXIxMAoGCCqGSM49BAMCA0gAMEUCIQCOMq9BEeVwuv19XMgTI6RALuJ1S0HC
-        wngbua/+U2LnYAIgVV2OSgKRYpGb1mix7xXroIjdxUeSJXQx/IXpZlNHKHA=
+        AjAMBgNVHRMBAf8EAjAAMCsGA1UdIwQkMCKAIBtHIhRVcdN3QhLGM5nrQ0EGPirP
+        FP4ynEGC9mvnRb+mMCgGA1UdEQQhMB+CFnBlZXIxLm9yZzEuZXhhbXBsZS5jb22C
+        BXBlZXIxMAoGCCqGSM49BAMCA0gAMEUCIQCGCbckHdyGHWPnl+8DzCaopToqnNg9
+        kqqZBRPuhyGoKgIgKqSaVAwo0FWNqffwla26c/J2MyZhoJ+uhcnIVWfJv3I=
         -----END CERTIFICATE-----
         
 
@@ -287,7 +287,7 @@ peers:
 #
 certificateAuthorities:
   ca-org1:
-    url: http://localhost:7054
+    url: http://luniv-7121063718640235758.luniverse.dev:7054
     # the properties specified under this object are passed to the 'http' client verbatim when
     # making the request to the Fabric-CA server
     httpOptions:

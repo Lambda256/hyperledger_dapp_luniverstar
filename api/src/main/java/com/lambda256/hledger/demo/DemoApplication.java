@@ -58,7 +58,7 @@ public class DemoApplication {
 	private static String cValue = "rwt";
 
 	private static Channel channel = null;
-	private static String chaincodeName = "myccjava";
+	private static String chaincodeName = "idoljava";
 	private static String chaincodeVersion = "1.0";
 
 	private static HFClient client = null;
@@ -74,17 +74,7 @@ public class DemoApplication {
 	@RequestMapping("/tx/{version}/histories")
 	public ResponseEntity<Object> getHistories(@RequestParam(value = "next", defaultValue = "0") String next) {
 		Map<String, Object> response = new HashMap<>();
-/*
-		if (channel == null) {
-			initialize();
-		}
 
-		try {
-			executeChaincode(client, channel);
-		} catch (Exception e) {
-			logger.error("exception", e);
-		}
- */
 		response.put("fundingCount", fundingCount);
 		response.put("likeCount", likeCount);
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -148,7 +138,7 @@ public class DemoApplication {
 			logger.error("exception", e);
 		}
 
-		// TODO test를 위해 RWT 잔고 체크를 하지 않는다.
+		// TODO balance check should be added
 		response.put("balance", Integer.MAX_VALUE);
 
 		return new ResponseEntity<>(
@@ -157,7 +147,7 @@ public class DemoApplication {
 	}
 
 	private static void initialize() {
-		connectionProfilePath = /*System.getProperty("user.dir")+ */"./connection-profile-Hyperledger.yaml";
+		connectionProfilePath = "./connection-profile-Hyperledger_Beta.yaml";
 		File f = new File(connectionProfilePath);
 		try {
 			javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
@@ -172,14 +162,8 @@ public class DemoApplication {
 			NetworkConfig networkConfig = NetworkConfig.fromYamlFile(f);
 			NetworkConfig.OrgInfo clientOrg = networkConfig.getClientOrganization();
 
-            /* ID/Secret Version
-            NetworkConfig.CAInfo caInfo = clientOrg.getCertificateAuthorities().get(0);
-            FabricUser user = getFabricUser(clientOrg, caInfo);
-			*/
-
-			/* Cert/Key Version */
-			NetworkConfig.CAInfo caInfo = null;
-			FabricUser user = getFabricUser4Local(clientOrg);
+            //NetworkConfig.CAInfo caInfo = clientOrg.getCertificateAuthorities().get(0);
+            FabricUser user = getFabricUser4Local(clientOrg);
 
 			client = HFClient.createNewInstance();
 			client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());
@@ -187,23 +171,12 @@ public class DemoApplication {
 
 			channel = client.loadChannelFromConfig(channelName, networkConfig);
 
-			//service discovery function.
-			//Peer p = channel.getPeers().iterator().next();
-			//channel.removePeer(p);
-			//channel.addPeer(p, Channel.PeerOptions.createPeerOptions().addPeerRole(Peer.PeerRole.SERVICE_DISCOVERY));
-			//Collection<String> cc = channel.getDiscoveredChaincodeNames();
-
 			channel.initialize();
 
 			channel.registerBlockListener(blockEvent -> {
-				logger.info(String.format("Receive block event (number %s) from %s", blockEvent.getBlockNumber(), blockEvent.getPeer()));
+				logger.info(String.format("Block event received (number %s) from %s", blockEvent.getBlockNumber(), blockEvent.getPeer()));
 			});
 			printChannelInfo(client, channel);
-
-			//executeChaincode(client, channel);
-
-			//logger.info("Shutdown channel.");
-			//channel.shutdown(true);
 
 		} catch (Exception e) {
 			logger.error("exception", e);
