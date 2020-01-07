@@ -15,7 +15,7 @@ var Chaincode = class {
     let ret = stub.getFunctionAndParameters();
     console.info(ret);
     let args = ret.params;
-    // initialise only if 6 parameters passed.
+    // initialize only if 6 parameters passed.
     if (args.length != 6) {
       return shim.error('Incorrect number of arguments. Expecting 6');
     }
@@ -86,7 +86,7 @@ var Chaincode = class {
     // Perform the execution
     let amount = parseInt(args[1]);
     if (typeof amount !== 'number') {
-      throw new Error('Expecting integer value for amount to be transaferred');
+      throw new Error('Expecting integer value for amount to be transferred');
     }
 
     Aval = Aval + amount;
