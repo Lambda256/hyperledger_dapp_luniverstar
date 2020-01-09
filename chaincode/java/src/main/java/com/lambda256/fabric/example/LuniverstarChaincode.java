@@ -30,7 +30,7 @@ public class LuniverstarChaincode extends ChaincodeBase {
             }
             List<String> args = stub.getParameters();
             if (args.size() != 6) {
-                newErrorResponse("Incorrect number of arguments. Expecting 4");
+                newErrorResponse("Incorrect number of arguments. Expecting 6");
             }
             // Initialize the chaincode
             String account1Key = args.get(0);
