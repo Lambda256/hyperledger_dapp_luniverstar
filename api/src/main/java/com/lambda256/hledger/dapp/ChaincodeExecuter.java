@@ -1,17 +1,3 @@
-/*
- *  Copyright 2019 Lambda256.com All Rights Reserved.
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *    http://www.apache.org/licenses/LICENSE-2.0
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-
 package com.lambda256.hledger.dapp;
 
 import java.io.UnsupportedEncodingException;
@@ -39,7 +25,7 @@ public class ChaincodeExecuter {
     private String chaincodeName;
     private String version;
     private ChaincodeID ccId;
-    // waitTime can be adjusted to avoid timeout for connection to external network
+
     private long waitTime = 10000;
 
     public ChaincodeExecuter(String chaincodeName, String version) {
@@ -89,26 +75,24 @@ public class ChaincodeExecuter {
         List<ProposalResponse> successful = new LinkedList<ProposalResponse>();
         List<ProposalResponse> failed = new LinkedList<ProposalResponse>();
 
-        // Java sdk will send transaction proposal to all peers, if some peer down but the response still meet the endorsement policy of chaincode,
-        // there is no need to retry. If not, you should re-send the transaction proposal.
         Collection<ProposalResponse> transactionPropResp = channel.sendTransactionProposal(transactionProposalRequest, channel.getPeers());
         for (ProposalResponse response : transactionPropResp) {
 
             if (response.getStatus() == ProposalResponse.Status.SUCCESS) {
                 String payload = new String(response.getChaincodeActionResponsePayload());
-                logger.info(String.format("[√] Got success response from peer %s => payload: %s", response.getPeer().getName(), payload));
+                logger.info(String.format("Success response from peer %s => payload: %s", response.getPeer().getName(), payload));
                 successful.add(response);
             } else {
                 String status = response.getStatus().toString();
                 String msg = response.getMessage();
-                logger.warn(String.format("[×] Got failed response from peer %s => %s: %s ", response.getPeer().getName(), status, msg));
+                logger.warn(String.format("Failed response from peer %s => %s: %s ", response.getPeer().getName(), status, msg));
                 failed.add(response);
             }
         }
 
         if (invoke) {
             logger.info("Sending transaction to orderers...");
-            // Java sdk tries all orderers to send transaction, so don't worry about one orderer gone.
+
             channel.sendTransaction(successful).thenApply(transactionEvent -> {
                 logger.info("Orderer response: txid" + transactionEvent.getTransactionID());
                 logger.info("Orderer response: block number: " + transactionEvent.getBlockEvent().getBlockNumber());

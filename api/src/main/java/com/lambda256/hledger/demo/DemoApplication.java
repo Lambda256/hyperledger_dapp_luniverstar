@@ -28,7 +28,13 @@ import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.openssl.PEMKeyPair;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
-import org.hyperledger.fabric.sdk.*;
+import org.hyperledger.fabric.sdk.Channel;
+import org.hyperledger.fabric.sdk.HFClient;
+import org.hyperledger.fabric.sdk.NetworkConfig;
+import org.hyperledger.fabric.sdk.BlockchainInfo;
+import org.hyperledger.fabric.sdk.BlockInfo;
+import org.hyperledger.fabric.sdk.SDKUtils;
+import org.hyperledger.fabric.sdk.Enrollment;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
@@ -58,7 +64,7 @@ public class DemoApplication {
 	private static String cValue = "rwt";
 
 	private static Channel channel = null;
-	private static String chaincodeName = "idoljava";
+	private static String chaincodeName = "aaaaa";
 	private static String chaincodeVersion = "1.0";
 
 	private static HFClient client = null;
@@ -83,10 +89,10 @@ public class DemoApplication {
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping("/tx/{version}/transactions/{action}")
 	public ResponseEntity<String> doTransaction(@RequestParam(value = "from", defaultValue = "World") String from,
-										@RequestParam(value = "inputs", defaultValue = "null") Object input,
-										@PathVariable("action") String action,
-										@PathVariable("version") String version,
-										@RequestBody TxRequest inputs) {
+												@RequestParam(value = "inputs", defaultValue = "null") Object input,
+												@PathVariable("action") String action,
+												@PathVariable("version") String version,
+												@RequestBody TxRequest inputs) {
 		String response = new String("OK");
 		logger.info(action);
 
@@ -162,8 +168,7 @@ public class DemoApplication {
 			NetworkConfig networkConfig = NetworkConfig.fromYamlFile(f);
 			NetworkConfig.OrgInfo clientOrg = networkConfig.getClientOrganization();
 
-            //NetworkConfig.CAInfo caInfo = clientOrg.getCertificateAuthorities().get(0);
-            FabricUser user = getFabricUser4Local(clientOrg);
+			FabricUser user = getFabricUser4Local(clientOrg);
 
 			client = HFClient.createNewInstance();
 			client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());
@@ -183,14 +188,14 @@ public class DemoApplication {
 		}
 	}
 
+
 	private static void lineBreak() {
 		logger.info("--------------------------------------------------------------------------");
 	}
 
 	private static void executeChaincode(HFClient client, Channel channel, String key, String changeValue) throws
 			ProposalException, InvalidArgumentException, UnsupportedEncodingException, InterruptedException,
-			ExecutionException, TimeoutException
-	{
+			ExecutionException, TimeoutException {
 		lineBreak();
 		ChaincodeExecuter executer = new ChaincodeExecuter(chaincodeName, chaincodeVersion);
 
@@ -202,65 +207,40 @@ public class DemoApplication {
 
 	private static void executeChaincodeQuery(HFClient client, Channel channel, String key) throws
 			ProposalException, InvalidArgumentException, UnsupportedEncodingException, InterruptedException,
-			ExecutionException, TimeoutException
-	{
+			ExecutionException, TimeoutException {
 		lineBreak();
 		ChaincodeExecuter executer = new ChaincodeExecuter(chaincodeName, chaincodeVersion);
 		executer.executeTransaction(client, channel, false,"query", key);
 	}
 
 	private static void printChannelInfo(HFClient client, Channel channel) throws
-			ProposalException, InvalidArgumentException, IOException
-	{
+			ProposalException, InvalidArgumentException, IOException {
 		lineBreak();
 		BlockchainInfo channelInfo = channel.queryBlockchainInfo();
 
-		logger.info("Channel height: " + channelInfo.getHeight());
-		for (long current = channelInfo.getHeight() - 1; current > -1; --current) {
+		long height = channelInfo.getHeight();
+		long MAX_LOG_COUNT = 10;
+
+		logger.info("Channel height: " + height);
+
+		for (long current = height - 1; current > -1; --current) {
 			BlockInfo returnedBlock = channel.queryBlockByNumber(current);
 			final long blockNumber = returnedBlock.getBlockNumber();
 
-			logger.info(String.format("Block #%d - previous hash id: %s", blockNumber, Hex.encodeHexString(returnedBlock.getPreviousHash())));
-			logger.info(String.format("Block #%d - data hash: %s", blockNumber, Hex.encodeHexString(returnedBlock.getDataHash())));
-			logger.info(String.format("Block #%d - calculated block hash is %s",
-					blockNumber, Hex.encodeHexString(SDKUtils.calculateBlockHash(client,blockNumber, returnedBlock.getPreviousHash(), returnedBlock.getDataHash()))));
+			logger.info(String.format("Block #%d - Previous hash id: %s", blockNumber, Hex.encodeHexString(returnedBlock.getPreviousHash())));
+			logger.info(String.format("Block #%d - Data hash: %s", blockNumber, Hex.encodeHexString(returnedBlock.getDataHash())));
+			logger.info(String.format("Block #%d - Calculated block hash is %s", blockNumber, Hex.encodeHexString(SDKUtils.calculateBlockHash(client,blockNumber, returnedBlock.getPreviousHash(), returnedBlock.getDataHash()))));
+
+			if (height - current > MAX_LOG_COUNT) break;
 		}
-
 	}
 
-	// Case 1 : Enroll Here!
-	private static FabricUser getFabricUser(NetworkConfig.OrgInfo clientOrg, NetworkConfig.CAInfo caInfo) throws
-			MalformedURLException, org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException, InfoException,
-			EnrollmentException, IOException
-	{
-		HFCAClient hfcaClient = HFCAClient.createNewInstance(caInfo);
-		HFCAInfo cainfo = hfcaClient.info();
-		lineBreak();
-		logger.info("CA name : " + cainfo.getCAName());
-		logger.info("CA version : " + cainfo.getVersion());
-
-		// Persistence is not part of SDK.
-
-		logger.info("Going to enroll user : " + userName);
-		Enrollment enrollment = hfcaClient.enroll(userName, secret);
-		logger.info("Enroll user : " + userName +  " successfully.");
-
-		FabricUser user = new FabricUser();
-		user.setMspId(clientOrg.getMspId());
-		user.setName(userName);
-		user.setOrganization(clientOrg.getName());
-		user.setEnrollment(enrollment);
-		return user;
-	}
-
-	// Case 2 : Already Enrolled at Fabric-CA
 	private static FabricUser getFabricUser4Local(NetworkConfig.OrgInfo clientOrg) throws
 			IOException, NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException
 	{
 		lineBreak();
 
 		String certificate = new String(IOUtils.toByteArray(new FileInputStream(new File("./cert.pem"))), "UTF-8");
-		//File privatekeyfile = findFileSk( new File("./"));
 		File privatekeyfile = new File("./key.pem");
 
 		EnrolleMentImpl enrollment = null;
@@ -323,17 +303,4 @@ public class DemoApplication {
 		return new JcaPEMKeyConverter().getPrivateKey(privateKeyInfo);
 	}
 
-	public static File findFileSk(File directory) {
-		File[] matches = directory.listFiles((dir, name) -> name.endsWith("_sk"));
-
-		if (null == matches) {
-			throw new RuntimeException(format("Matches returned null does %s directory exist?", directory.getAbsoluteFile().getName()));
-		}
-
-		if (matches.length != 1) {
-			throw new RuntimeException(format("Expected in %s only 1 sk file but found %d", directory.getAbsoluteFile().getName(), matches.length));
-		}
-
-		return matches[0];
-	}
 }
