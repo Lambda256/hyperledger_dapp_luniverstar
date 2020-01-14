@@ -57,7 +57,6 @@ public class DemoApplication {
 
 	private static String channelName = "mychannel";
 	private static String userName = "admin";
-	private static String secret = "adminpw";
 
 	private static String aValue = "funding";
 	private static String bValue = "like";
