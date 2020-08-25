@@ -152,7 +152,7 @@ public class DemoApplication {
 	}
 
 	private static void initialize() {
-		connectionProfilePath = "./connection-profile-Hyperledger_Beta.yaml";
+		connectionProfilePath = "./connection-profile-Hyperledger_Free_Trial.yaml";
 		File f = new File(connectionProfilePath);
 		try {
 			javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
